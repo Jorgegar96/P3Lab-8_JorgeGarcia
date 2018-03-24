@@ -15,12 +15,15 @@
 #include <time.h>
 #include <stdlib.h>
 #include <typeinfo>
+#include <fstream>
 
 using namespace std;
 
 int menu();
 Monstruo* crearMonst();
 void Pelear(Heroe*, Monstruo*);
+void cargar(Heroe*);
+void guardar(Heroe*);
 
 int main(){
 	int dinero, derrotados, vida, max_vida;
@@ -127,6 +130,7 @@ int main(){
 				}	
 				break;
 			case 5:
+				guardar(h);
 				break;
 			case 6:
 				if(monsters.size()>0){
@@ -145,9 +149,13 @@ int main(){
 					cout<<"No hay monstruos en la lista"<<endl;
 				}
 				break;
-			case 7:
+			case 8:
 				cout<<"Salir"<<endl;
 				seguir = false;
+				break;
+			case 7:
+				h = new Joven("default", 0, 0, 0,0, NULL);
+				cargar(h);
 				break;
 		}
 	
@@ -199,6 +207,7 @@ void Pelear(Heroe* heroe, Monstruo* monst){
 		monst->derrotado(heroe);
 	}else{
 		cout<<"Has perdido!"<<endl;
+		heroe->setDinero(((heroe->getDinero()/2)*-1));
 	}
 	monst->restoreHP();
 	heroe->restoreHP();
@@ -248,8 +257,38 @@ int menu(){
 		<<"4)Sacar/Guarda Espada"<<endl
 		<<"5)Guardar Sesion"<<endl
 		<<"6)Eliminar"<<endl
-		<<"7)Salir"<<endl;
+		<<"7) Cargar"<<endl
+		<<"8)Salir"<<endl;
 	cin>>op;
 	return op;
 
+}
+
+void guardar(Heroe* heroe){
+	int vida = heroe->getVida();
+	int derrotados = heroe->getDefeated();
+	int dinero = heroe->getDinero();
+	ofstream out("Game.gm", ios::binary);
+	if(out.is_open()){
+		out.write(reinterpret_cast<char*>(&vida),sizeof(int));
+		out.write(reinterpret_cast<char*>(&derrotados), sizeof(int));
+		out.write(reinterpret_cast<char*>(&dinero),sizeof(int));
+		out.close();
+	}
+	
+}
+
+void cargar(Heroe* heroe){
+	ifstream in("Game.gm", ios::binary);
+	int vida;
+	in.read(reinterpret_cast<char*>(&vida), sizeof(int));
+	heroe->setMax(vida);
+	heroe->restoreHP();
+	int derrotados;
+	in.read(reinterpret_cast<char*>(&derrotados), sizeof(int));
+	heroe->setDerrotados(derrotados);
+	heroe->setItem(new Bumeran("bum","Azul"));
+	int dinero;
+	in.read(reinterpret_cast<char*>(&dinero), sizeof(int));
+	heroe->setDinero(dinero - heroe->getDinero());
 }

@@ -34,7 +34,9 @@ class Heroe{
 		void setSelf(Heroe*);
 		void aumentarMax();
 		void restoreHP();
+		void setDerrotados(int);
 		int getMax();
+		void setMax(int);
 		void explo(int);
 		
 

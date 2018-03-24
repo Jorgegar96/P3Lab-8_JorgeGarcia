@@ -17,6 +17,14 @@ Heroe:: Heroe(string nombre, int vida, int defeated, int dinero, int max_vida, I
 
 }
 
+void Heroe:: setMax(int max){
+	max_vida = max;
+}
+
+void Heroe:: setDerrotados(int derr){
+	defeated = derr;
+}
+
 void Heroe::explo(int cambio){
 	vida+=cambio;
 }
