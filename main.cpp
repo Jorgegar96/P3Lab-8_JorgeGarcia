@@ -291,4 +291,5 @@ void cargar(Heroe* heroe){
 	int dinero;
 	in.read(reinterpret_cast<char*>(&dinero), sizeof(int));
 	heroe->setDinero(dinero - heroe->getDinero());
+	heroe->setSelf(heroe);
 }
