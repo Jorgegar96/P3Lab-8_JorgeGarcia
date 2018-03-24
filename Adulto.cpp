@@ -4,7 +4,7 @@
 
 using namespace std;
 
-Adulto:: Adulto(string nombre, int vida, int defeated, int dinero, int maxi_vida, Item* item):Heroe(nombre, vida, defeated, dinero, max_vida, item){}
+Adulto:: Adulto(string nombre, int vida, int defeated, int dinero, int max_vida, Item* item):Heroe(nombre, vida, defeated, dinero, max_vida, item){}
 
 int Adulto:: defensa(){
 	return 4;

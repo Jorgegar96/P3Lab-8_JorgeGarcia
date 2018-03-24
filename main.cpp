@@ -64,7 +64,7 @@ int main(){
 							break;
 					}
 					h->setItem(item);
-					op = 0;
+					op = -1;
 					for (int i=0;i < monsters.size(); i++){
 						cout<<i<<")"<<monsters.at(i)->getNombre()<<endl;
 					}
@@ -72,9 +72,12 @@ int main(){
 						cin>>op;
 					}
 					Pelear(h, monsters.at(op));
-					
+				}else{
+					cout<<"No hay monstruos"<<endl;
+				}	
 				break;
 			case 3:
+				cout<<"Fondos: "<<h->getDinero()<<endl;
 				cout<<"Desea comprar un corazon por $200?"<<endl;
 				cout<<"1) si 2) no"<<endl;
 				op = 0;
@@ -104,6 +107,7 @@ int main(){
 					}else{
 						h = new Joven(nombre, vida, derrotados, dinero, max_vida, item);
 					}
+					cout<<"Eres un adulto!"<<endl;
 				}else{
 					cout<<"No se han derrotado 3 jefes aun"<<endl;
 				}	
@@ -111,29 +115,37 @@ int main(){
 			case 5:
 				break;
 			case 6:
-				for (int i=0;i < monsters.size(); i++){
-					cout<<i<<")"<<monsters.at(i)->getNombre()<<endl;
+				if(monsters.size()>0){
+					for (int i=0;i < monsters.size(); i++){
+						cout<<i<<")"<<monsters.at(i)->getNombre()<<endl;
+					}
+					while(op<0 || op >= monsters.size()){
+						cin>>op;
+					}
+					monsters.erase(monsters.begin()+op);
+				}else{
+					cout<<"No hay monstruos en la lista"<<endl;
 				}
-				while(op<0 || op >= monsters.size()){
-					cin>>op;
-				}
-				monsters.erase(monsters.begin()+op);
 				break;
 			case 7:
+				cout<<"Salir"<<endl;
 				seguir = false;
 				break;
 		}
+	
 	}
 	return 0;
-	}
 }
 void Pelear(Heroe* heroe, Monstruo* monst){
 	int turno =0;
+	cout<<"Se ha iniciado una batalla"<<endl;
 	srand(time(NULL));
 	int att_bot=0;
-	bool salir = false;
-	while (heroe->getVida() > 0 && monst->getVida()>0 && !salir){
+	bool seguir= true;
+	while (heroe->getVida() > 0 && monst->getVida()>0 && seguir){
 		if (turno%2==0){
+			cout<<"Jugador HP: "<< heroe->getVida()<<endl
+				<<"Enemigo HP: "<< monst->getVida()<<endl;
 			cout<<"1)Atacar"<<endl
 				<<"2)Ataque especial"<<endl
 				<<"3)Usar Item"<<endl
@@ -153,11 +165,11 @@ void Pelear(Heroe* heroe, Monstruo* monst){
 					heroe->useItem(monst);
 					break;
 				case 4:
-					salir = true;
+					seguir = false;
 					break;
 			}
 		}else{
-		 att_bot = rand()%3 + 1;
+		att_bot = rand()%3 + 1;
 	 		if(att_bot == 1){
 				monst->ataque(heroe);
 			}		
@@ -165,7 +177,10 @@ void Pelear(Heroe* heroe, Monstruo* monst){
 		turno++;
 	}
 	if (monst->getVida() <= 0){
+		cout<<"Derrotaste al monstruo!"<<endl;
 		monst->derrotado(heroe);
+	}else{
+		cout<<"Has perdido!"<<endl;
 	}
 	heroe->restoreHP();
 }

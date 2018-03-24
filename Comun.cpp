@@ -5,11 +5,12 @@
 using namespace std;
 
 Comun::Comun(string nombre, int defense, int atack, int debi):Monstruo(nombre, vida, defense, atack, debi){
-	int vida =0;
-	while (vida < 4 || vida > 12){
+	int HP =0;
+	while (HP < 4 || HP > 12){
 		cout<<"Ingrese la vida del monstruo (entre 4-12)"<<endl;
-		cin>>vida;
+		cin>>HP;
 	}
+	vida = HP;
 }
 
 void Comun:: derrotado(Heroe* heroe){

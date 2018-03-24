@@ -7,10 +7,14 @@ using namespace std;
 
 Monstruo:: Monstruo(string nombre, int vida, int def, int att, int debilidad){
 	this->nombre = nombre;
-	this->vida = vida;
+	
 	this->def = def;
 	this->att = att;
 	this->debilidad = debilidad;
+}
+
+void Monstruo:: newHP(int HP){
+	vida = HP;
 }
 
 string Monstruo:: getNombre(){

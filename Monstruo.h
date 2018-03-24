@@ -22,6 +22,7 @@ class Monstruo{
 		void setVida(int);
 		int defensa();
 		void ataque(Heroe*);
+		void newHP(int);
 		virtual void derrotado(Heroe*) = 0;
 
 };

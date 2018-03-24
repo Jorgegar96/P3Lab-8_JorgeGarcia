@@ -6,11 +6,12 @@
 using namespace std;
 
 Subjefe::Subjefe(string nombre, int defense, int att, int debi):Monstruo(nombre, vida, defense, att, debi){
-	int vida =0;
-	while (vida < 12 || vida > 26){
+	int HP =0;
+	while (HP < 12 || HP > 26){
 		cout<<"Ingrese la vida del monstruo (entre 12-26)"<<endl;
-		cin>>vida;
+		cin>>HP;
 	}
+	vida = HP;
 }
 
 void Subjefe:: derrotado(Heroe* heroe){
