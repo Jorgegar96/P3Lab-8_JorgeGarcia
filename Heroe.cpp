@@ -17,6 +17,10 @@ Heroe:: Heroe(string nombre, int vida, int defeated, int dinero, int max_vida, I
 
 }
 
+void Heroe::explo(int cambio){
+	vida+=cambio;
+}
+
 string Heroe:: getNombre(){
 	return nombre;
 }

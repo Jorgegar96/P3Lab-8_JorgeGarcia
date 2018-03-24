@@ -12,6 +12,7 @@ Jefe::Jefe(string nombre, int defense, int att, int debi):Monstruo(nombre, vida,
 		cin>>HP;
 	}
 	vida = HP;
+	max_vida=HP;
 }
 
 void Jefe:: derrotado(Heroe* heroe){

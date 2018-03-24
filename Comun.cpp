@@ -11,6 +11,7 @@ Comun::Comun(string nombre, int defense, int atack, int debi):Monstruo(nombre, v
 		cin>>HP;
 	}
 	vida = HP;
+	max_vida = HP;
 }
 
 void Comun:: derrotado(Heroe* heroe){

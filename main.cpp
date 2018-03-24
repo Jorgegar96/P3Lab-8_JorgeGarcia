@@ -29,8 +29,9 @@ int main(){
 	Heroe* h;
 	string color;
 	string nombre;
+	cout<<"Ingrese su nombre:"<<endl;
 	cin>>nombre;
-	h = new Joven(nombre, 12, 0, 200, 12, new Bumeran("Boom", "Cafe"));
+	h = new Joven(nombre, 12, 0, 2000, 12, new Bumeran("Boom", "Cafe"));
 	h->setSelf(h);
 	Item* item;
 	int op = 0;
@@ -40,6 +41,7 @@ int main(){
 				monsters.push_back(crearMonst());
 				break;
 			case 2:
+				op = 0;
 				if(monsters.size()>0){
 					cout<<"Elija un item"<<endl
 						<<"1)Bumeran"<<endl
@@ -48,9 +50,9 @@ int main(){
 					while (op<1 || op > 3){
 						cin>>op;
 					}
-					cout<<"Nombre"<<endl;
+					cout<<"Nombre del Item:"<<endl;
 					cin>>nombre;
-					cout<<"Color"<<endl;
+					cout<<"Color del Item:"<<endl;
 					cin>>color;
 					switch(op){
 						case 1:
@@ -65,8 +67,17 @@ int main(){
 					}
 					h->setItem(item);
 					op = -1;
+					cout<<"Lista de monstruos:"<<endl;
 					for (int i=0;i < monsters.size(); i++){
-						cout<<i<<")"<<monsters.at(i)->getNombre()<<endl;
+						cout<<i<<")"<<monsters.at(i)->getNombre();
+						if (typeid(*monsters.at(i))==typeid(Jefe)){
+							cout<<"- Jefe"<<endl;
+						}else if(typeid(*monsters.at(i))==typeid(Subjefe)){
+							cout<<"- Subjefe"<<endl;
+						}else{
+							cout<<"- Comun"<<endl;
+						}
+
 					}
 					while(op<0 || op >= monsters.size()){
 						cin>>op;
@@ -104,10 +115,13 @@ int main(){
 					item = h->getItem();
 					if(typeid(*h) == typeid(Joven)){
 						h = new Adulto(nombre, vida, derrotados, dinero, max_vida, item);
+						cout<<"Eres Adulto!"<<endl;
 					}else{
+						cout<<"Eres Joven!"<<endl;
 						h = new Joven(nombre, vida, derrotados, dinero, max_vida, item);
 					}
-					cout<<"Eres un adulto!"<<endl;
+					h->setSelf(h);
+					
 				}else{
 					cout<<"No se han derrotado 3 jefes aun"<<endl;
 				}	
@@ -116,13 +130,17 @@ int main(){
 				break;
 			case 6:
 				if(monsters.size()>0){
+					cout<<"Monstruos: "<<endl;
 					for (int i=0;i < monsters.size(); i++){
 						cout<<i<<")"<<monsters.at(i)->getNombre()<<endl;
 					}
-					while(op<0 || op >= monsters.size()){
+					while(op<0 || op > monsters.size()){
 						cin>>op;
 					}
-					monsters.erase(monsters.begin()+op);
+					if(op < monsters.size()){
+						monsters.erase(monsters.begin()+op);
+					}
+
 				}else{
 					cout<<"No hay monstruos en la lista"<<endl;
 				}
@@ -182,6 +200,7 @@ void Pelear(Heroe* heroe, Monstruo* monst){
 	}else{
 		cout<<"Has perdido!"<<endl;
 	}
+	monst->restoreHP();
 	heroe->restoreHP();
 }
 
@@ -191,6 +210,9 @@ Monstruo* crearMonst(){
 	string name;
 	cin>>name;
 	cout<<"Elija la debilidad"<<endl;
+	cout<<"1)Bumeran"<<endl
+		<<"2)Flechas"<<endl
+		<<"3)Bombas"<<endl;
 	int deb =0;
 	while (deb < 1 || deb >> 3){
 		cin>>deb;

@@ -9,5 +9,10 @@ using namespace std;
 Flechas:: Flechas(string nombre, string color):Item(nombre, color){}
 
 void Flechas:: ataque(Monstruo* monstruo, Heroe* heroe){
-	monstruo->setVida( -4 );
+	if(monstruo->getDebilidad() == 2){
+		monstruo->setVida(-8);
+	}else{
+	
+		monstruo->setVida( -4 );
+	}
 }

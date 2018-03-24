@@ -7,10 +7,18 @@ using namespace std;
 
 Monstruo:: Monstruo(string nombre, int vida, int def, int att, int debilidad){
 	this->nombre = nombre;
-	
+		
 	this->def = def;
 	this->att = att;
 	this->debilidad = debilidad;
+}
+
+void Monstruo:: restoreHP(){
+	vida = max_vida;
+}
+
+int Monstruo:: getDebilidad(){
+	return debilidad;
 }
 
 void Monstruo:: newHP(int HP){

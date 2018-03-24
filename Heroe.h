@@ -35,6 +35,7 @@ class Heroe{
 		void aumentarMax();
 		void restoreHP();
 		int getMax();
+		void explo(int);
 		
 
 		virtual int defensa() = 0;
